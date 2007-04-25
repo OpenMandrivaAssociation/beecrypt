@@ -1,6 +1,11 @@
 %define name beecrypt
-%define version 4.1.2
+%define version 4.1.3
+%define cvs 20070425
+%if %cvs
+%define release %mkrel 0.%cvs.1
+%else
 %define release %mkrel 1
+%endif
 %define	with_python		--with-python
 %{expand:%%define with_python_version %(python -V 2>&1| awk '{print $2}'|cut -d. -f1-2)}
 %define libname %mklibname beecrypt 6
@@ -13,9 +18,11 @@ Release:	%{release}
 Group:		System/Libraries
 License:	LGPL
 URL:		http://beecrypt.sourceforge.net/
+%if %cvs
+Source0:	%{name}-%{cvs}.tar.bz2
+%else
 Source0:	http://prdownloads.sourceforge.net/beecrypt/%{name}-%{version}.tar.bz2
-Patch0: 	beecrypt-4.1.2-base64.patch
-Patch1: 	beecrypt-4.1.2-python-api.patch
+%endif
 Patch2:		beecrypt-4.1.2-biarch.patch
 BuildRequires:	doxygen tetex-dvips tetex-latex graphviz
 BuildRequires:	m4
@@ -57,12 +64,18 @@ files needed for using python with beecrypt.
 %endif
 
 %prep
+%if %cvs
+%setup -q -n %name
+%else
 %setup -q
-%patch0 -p1 -b .base64
-%patch1 -p1 -b .python-api
+%endif
 %patch2 -p1 -b .biarch
 
 %build
+
+%if %cvs
+./autogen.sh
+%endif
 
 %configure	--enable-shared \
 		--enable-static \
@@ -70,7 +83,9 @@ files needed for using python with beecrypt.
 		CPPFLAGS="-I%{_includedir}/python%{with_python_version}"
 
 %make
+cd include/beecrypt
 doxygen
+cd ../..
 
 # XXX delete next line to build with legacy, non-check aware, rpmbuild.
 #%check
