@@ -1,5 +1,5 @@
 %define name beecrypt
-%define version 4.1.3
+%define version 4.2.0
 %define cvs 20070425
 %if %cvs
 %define release %mkrel 0.%cvs.1
@@ -23,7 +23,17 @@ Source0:	%{name}-%{cvs}.tar.bz2
 %else
 Source0:	http://prdownloads.sourceforge.net/beecrypt/%{name}-%{version}.tar.bz2
 %endif
-Patch2:		beecrypt-4.1.2-biarch.patch
+Patch0:		beecrypt-4.1.2-biarch.patch
+# AdamW: ugly patch simply defines upstream's odd libaltdir variable to be 
+# equal to libdir in various places. Also replaces a similarly weird pythondir
+# variable with hardcoded $(libdir)/python2.5 , so will stop working when
+# python goes to 2.6. I expect upstream to have a better fix for this issue
+# by then, so it won't matter. The problem is that beecrypt tries to set this
+# libaltdir variable to /usr/lib or /usr/lib64 depending on the arch in use
+# which it tests by grepping the default CFLAGS for --march=x86_64 . Ours
+# don't include this, so the test breaks. Upstream should simply be using
+# standard libdir variable.
+Patch1:		beecrypt-4.2.0-lib64.patch
 BuildRequires:	doxygen tetex-dvips tetex-latex graphviz
 BuildRequires:	m4
 %if %{?with_python:1}0
@@ -69,10 +79,10 @@ files needed for using python with beecrypt.
 %else
 %setup -q
 %endif
-%patch2 -p1 -b .biarch
+%patch0 -p1 -b .biarch
+%patch1 -p0 -b .lib64
 
 %build
-
 %if %cvs
 ./autogen.sh
 %endif
