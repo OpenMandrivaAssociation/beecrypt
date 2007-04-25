@@ -8,7 +8,7 @@
 %endif
 %define	with_python		--with-python
 %{expand:%%define with_python_version %(python -V 2>&1| awk '{print $2}'|cut -d. -f1-2)}
-%define libname %mklibname beecrypt 6
+%define libname %mklibname beecrypt 7
 %define libnamedev %{libname}-devel
 
 Summary:	An open source cryptography library
