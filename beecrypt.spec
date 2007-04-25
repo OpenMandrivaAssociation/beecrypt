@@ -88,10 +88,10 @@ doxygen
 cd ../..
 
 # XXX delete next line to build with legacy, non-check aware, rpmbuild.
-#%check
-#make check || :
-#cat /proc/cpuinfo
-#make bench || :
+%check
+make check || :
+cat /proc/cpuinfo
+make bench || :
 
 %install
 rm -fr $RPM_BUILD_ROOT
