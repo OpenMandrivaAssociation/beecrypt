@@ -2,7 +2,7 @@
 %define version 4.2.0
 %define cvs 20070425
 %if %cvs
-%define release %mkrel 0.%cvs.1
+%define release %mkrel 0.%cvs.2
 %else
 %define release %mkrel 1
 %endif
@@ -95,7 +95,9 @@ files needed for using python with beecrypt.
 %make
 cd include/beecrypt
 doxygen
-cd ../..
+cd c++
+doxygen
+cd ../../..
 
 # XXX delete next line to build with legacy, non-check aware, rpmbuild.
 %check
