@@ -56,6 +56,7 @@ Summary:	Files needed for developing applications with beecrypt
 Group:		Development/C
 Requires:	%{libname} = %{version}
 Provides:	lib%{name}-devel = %{version}-%{release}
+Conflicts:	%{mklibname beecrypt 6}-devel
 
 %description -n	%{libnamedev}
 Beecrypt is a general-purpose cryptography library.  This package contains
