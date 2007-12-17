@@ -39,7 +39,6 @@ BuildRequires:	m4
 %if %{?with_python:1}0
 BuildRequires:	python-devel >= %{with_python_version}
 %endif
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 Beecrypt is a general-purpose cryptography library.
