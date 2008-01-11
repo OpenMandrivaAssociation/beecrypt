@@ -4,7 +4,7 @@
 %if %cvs
 %define release %mkrel 0.%cvs.2
 %else
-%define release %mkrel 1
+%define release %mkrel 2
 %endif
 %define	with_python		--with-python
 %{expand:%%define with_python_version %(python -V 2>&1| awk '{print $2}'|cut -d. -f1-2)}
