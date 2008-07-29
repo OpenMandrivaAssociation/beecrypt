@@ -10,10 +10,10 @@
 %define with_java --with-java
 
 %define major 7
-%define libname %mklibname %name %major
-%define libname_cxx %mklibname %name_cxx %major
-%define libname_java %mklibname %name_java %major
-%define develname %mklibname %name -d
+%define libname %mklibname %{name} %{major}
+%define libname_cxx %mklibname %{name}_cxx %{major}
+%define libname_java %mklibname %{name}_java %{major}
+%define develname %mklibname %{name} -d
 
 Summary:	An open source cryptography library
 Name:		beecrypt
@@ -104,7 +104,7 @@ Summary:	Files needed for C++ applications using beecrypt
 Group:		Development/C++
 Requires:	%{libname} = %{version}
 
-%package -n	%{libname_cxx}
+%description -n	%{libname_cxx}
 Beecrypt is a general-purpose cryptography library.  This package contains
 files needed for using C++ with beecrypt.
 %endif
@@ -115,7 +115,7 @@ Summary:	Files needed for java applications using beecrypt.
 Group:		Development/C
 Requires:	%{libname} = %{version}
 
-%package -n	%{libname_java}
+%description -n	%{libname_java}
 Beecrypt is a general-purpose cryptography library.  This package contains
 files needed for using java with beecrypt.
 %endif
