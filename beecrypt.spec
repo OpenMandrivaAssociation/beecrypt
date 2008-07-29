@@ -111,7 +111,7 @@ files needed for using C++ with beecrypt.
 
 %if %{?with_java:1}0
 %package -n	%{libname_java}
-Summary:	Files needed for java applications using beecrypt.
+Summary:	Files needed for java applications using beecrypt
 Group:		Development/C
 Requires:	%{libname} = %{version}
 
