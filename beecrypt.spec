@@ -1,14 +1,19 @@
-%define cvs	20080216
+%define cvs 20080216
 %if %cvs
-%define release	%mkrel 0.%cvs.1
+%define release %mkrel 0.%cvs.1
 %else
-%define release	%mkrel 3
+%define release %mkrel 4
 %endif
-%define	with_python	--with-python=%_bindir/python
 
-%define major		7
-%define libname		%mklibname %name %major
-%define develname	%mklibname %name -d
+%define	with_python --with-python=%_bindir/python
+%define with_cplusplus --with-cplusplus
+%define with_java --with-java
+
+%define major 7
+%define libname %mklibname %name %major
+%define libname_cxx %mklibname %name_cxx %major
+%define libname_java %mklibname %name_java %major
+%define develname %mklibname %name -d
 
 Summary:	An open source cryptography library
 Name:		beecrypt
@@ -45,6 +50,12 @@ BuildRequires:	m4
 %if %{?with_python:1}0
 BuildRequires:	python-devel >= %{pyver}
 %endif
+%if %{?with_cplusplus:1}0
+BuildRequires:	icu-devel
+%endif
+%if %{?with_java:1}0
+BuildRequires:	java-devel
+%endif
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
@@ -60,6 +71,12 @@ Beecrypt is a general-purpose cryptography library.
 %package -n	%{develname}
 Summary:	Files needed for developing applications with beecrypt
 Group:		Development/C
+%if %{?with_cplusplus:1}0
+Requires:	%{libname_cxx} = %{version}
+%endif
+%if %{?with_java:1}0
+Requires:	%{libname_java} = %{version}
+%endif
 Requires:	%{libname} = %{version}
 Provides:	%{name}-devel = %{version}-%{release}
 Provides:	lib%{name}-devel = %{version}-%{release}
@@ -81,7 +98,30 @@ Beecrypt is a general-purpose cryptography library.  This package contains
 files needed for using python with beecrypt.
 %endif
 
+%if %{?with_cplusplus:1}0
+%package -n	%{libname_cxx}
+Summary:	Files needed for C++ applications using beecrypt
+Group:		Development/C++
+Requires:	%{libname} = %{version}
+
+%package -n	%{libname_cxx}
+Beecrypt is a general-purpose cryptography library.  This package contains
+files needed for using C++ with beecrypt.
+%endif
+
+%if %{?with_java:1}0
+%package -n	%{libname_java}
+Summary:	Files needed for java applications using beecrypt.
+Group:		Development/C
+Requires:	%{libname} = %{version}
+
+%package -n	%{libname_java}
+Beecrypt is a general-purpose cryptography library.  This package contains
+files needed for using java with beecrypt.
+%endif
+
 %prep
+
 %if %cvs
 %setup -q -n %{name}
 %else
@@ -96,10 +136,13 @@ files needed for using python with beecrypt.
 ./autogen.sh
 %endif
 
-%configure	--enable-shared \
-		--enable-static \
-		%{?with_python} \
-		CPPFLAGS="-I%{_includedir}/python%{pyver}"
+%configure \
+    --enable-shared \
+    --enable-static \
+    %{?with_python} \
+    %{?with_cplusplus} \
+    %{?with_java} \
+    CPPFLAGS="-I%{_includedir}/python%{pyver}"
 
 %make
 cd include/beecrypt
@@ -116,13 +159,11 @@ make bench || :
 
 %install
 rm -fr %{buildroot}
-%{makeinstall_std}
+
+%makeinstall_std
 
 # XXX nuke unpackaged files, artifacts from using libtool to produce module
 rm -f %{buildroot}%{_libdir}/python%{pyver}/site-packages/_bc.*a
-
-%clean
-rm -fr %{buildroot}
 
 %if %mdkversion < 200900
 %post -n %{libname} -p /sbin/ldconfig
@@ -132,15 +173,38 @@ rm -fr %{buildroot}
 %postun -n %{libname} -p /sbin/ldconfig
 %endif
 
+%if %mdkversion < 200900
+%post -n %{libname_cxx} -p /sbin/ldconfig
+%endif
+
+%if %mdkversion < 200900
+%postun -n %{libname_cxx} -p /sbin/ldconfig
+%endif
+
+%if %mdkversion < 200900
+%post -n %{libname_java} -p /sbin/ldconfig
+%endif
+
+%if %mdkversion < 200900
+%postun -n %{libname_java} -p /sbin/ldconfig
+%endif
+
+%clean
+rm -fr %{buildroot}
+
 %files -n %{libname}
 %defattr(-,root,root)
 %doc README BENCHMARKS
-%{_libdir}/*.so.%{major}*
+%{_libdir}/libbeecrypt.so.%{major}*
 
 %files -n %{develname}
 %defattr(-,root,root)
 %doc BUGS docs/html docs/latex
 %{_includedir}/%{name}
+%if %{?with_cplusplus:1}0
+%{_libdir}/%{name}/base.so
+%{_libdir}/%{name}/*.*a
+%endif
 %{_libdir}/*.a
 %{_libdir}/*.la
 %{_libdir}/*.so
@@ -151,3 +215,17 @@ rm -fr %{buildroot}
 %{_libdir}/python%{pyver}/site-packages/_bc.so
 %endif
 
+%if %{?with_cplusplus:1}0
+%files -n %{libname_cxx}
+%defattr(-,root,root)
+%config %{_sysconfdir}/beecrypt.conf
+%dir %{_libdir}/%{name}
+%{_libdir}/%{name}/base.so.*
+%{_libdir}/libbeecrypt_cxx.so.%{major}*
+%endif
+
+%if %{?with_java:1}0
+%files -n %{libname_java}
+%defattr(-,root,root)
+%{_libdir}/libbeecrypt_java.so.%{major}*
+%endif
