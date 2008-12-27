@@ -1,6 +1,6 @@
 %define cvs 20080216
 %if %cvs
-%define release %mkrel 0.%cvs.2
+%define release %mkrel 0.%cvs.3
 %else
 %define release %mkrel 1
 %endif
@@ -136,7 +136,7 @@ files needed for using java with beecrypt.
 ./autogen.sh
 %endif
 
-%configure \
+%configure2_5x \
     --enable-shared \
     --enable-static \
     %{?with_python} \
