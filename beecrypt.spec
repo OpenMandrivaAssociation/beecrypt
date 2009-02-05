@@ -1,6 +1,6 @@
-%define cvs 20080216
+%define cvs 20090205
 %if %cvs
-%define release %mkrel 0.%cvs.3
+%define release %mkrel 0.%cvs.1
 %else
 %define release %mkrel 1
 %endif
@@ -39,9 +39,6 @@ Patch0:		beecrypt-4.1.2-biarch.patch
 # standard libdir variable. (This is mostly fixed now (2008/02), only two
 # instances left).
 Patch1:		beecrypt-4.2.0-lib64.patch
-# Obvious typo "retach" for "detach" breaks build - will submit
-# upstream - AdamW 2008/02
-Patch2:		beecrypt-4.2.0-typo.patch
 BuildRequires:	doxygen
 BuildRequires:	tetex-dvips
 BuildRequires:	tetex-latex
@@ -129,7 +126,6 @@ files needed for using java with beecrypt.
 %endif
 %patch0 -p1 -b .biarch
 %patch1 -p0 -b .lib64
-%patch2 -p1 -b .typo
 
 %build
 %if %cvs
