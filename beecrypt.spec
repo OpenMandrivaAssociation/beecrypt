@@ -45,6 +45,7 @@ BuildRequires:	tetex-dvips
 BuildRequires:	tetex-latex
 BuildRequires:	graphviz
 BuildRequires:	m4
+BuildRequires:	libgomp-devel
 %if %{?with_python:1}0
 BuildRequires:	python-devel >= %{pyver}
 %endif
@@ -52,7 +53,7 @@ BuildRequires:	python-devel >= %{pyver}
 BuildRequires:	icu-devel
 %endif
 %if %{?with_java:1}0
-BuildRequires:	java-devel
+BuildRequires:	java-rpmbuild
 %endif
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
