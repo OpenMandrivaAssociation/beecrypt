@@ -1,4 +1,4 @@
-%define cvs 20090205
+%define cvs 0
 %if %cvs
 %define release %mkrel 0.%cvs.1
 %else
@@ -17,7 +17,7 @@
 
 Summary:	An open source cryptography library
 Name:		beecrypt
-Version:	4.2.0
+Version:	4.2.1
 Release:	%{release}
 Group:		System/Libraries
 License:	LGPLv2+
@@ -25,7 +25,7 @@ URL:		http://beecrypt.sourceforge.net/
 %if %cvs
 Source0:	%{name}-%{cvs}.tar.lzma
 %else
-Source0:	http://prdownloads.sourceforge.net/beecrypt/%{name}-%{version}.tar.bz2
+Source0:	http://prdownloads.sourceforge.net/beecrypt/%{name}-%{version}.tar.gz
 %endif
 Patch0:		beecrypt-4.1.2-biarch.patch
 # AdamW: ugly patch simply defines upstream's odd libaltdir variable to be 
@@ -39,6 +39,7 @@ Patch0:		beecrypt-4.1.2-biarch.patch
 # standard libdir variable. (This is mostly fixed now (2008/02), only two
 # instances left).
 Patch1:		beecrypt-4.2.0-lib64.patch
+Patch2:		beecrypt-4.2.0-link.patch
 BuildRequires:	doxygen
 BuildRequires:	tetex-dvips
 BuildRequires:	tetex-latex
@@ -126,6 +127,7 @@ files needed for using java with beecrypt.
 %endif
 %patch0 -p1 -b .biarch
 %patch1 -p0 -b .lib64
+%patch2 -p1 -b .link
 
 %build
 %if %cvs
