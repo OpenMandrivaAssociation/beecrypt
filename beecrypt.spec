@@ -2,12 +2,14 @@
 %if %cvs
 %define release %mkrel 0.%cvs.1
 %else
-%define release %mkrel 1
+%define release %mkrel 2
 %endif
 
 %define	with_python --with-python=%_bindir/python
 %define with_cplusplus --with-cplusplus
+%ifnarch %mips %java
 %define with_java --with-java
+%endif
 
 %define major 7
 %define libname %mklibname %{name} %{major}
