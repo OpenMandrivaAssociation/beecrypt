@@ -137,6 +137,8 @@ files needed for using java with beecrypt.
 ./autogen.sh
 %endif
 
+export OPENMP_LIBS="-lgomp"
+
 %configure2_5x \
     --enable-shared \
     --enable-static \
