@@ -42,6 +42,7 @@ Patch0:		beecrypt-4.1.2-biarch.patch
 # instances left).
 Patch1:		beecrypt-4.2.0-lib64.patch
 Patch2:		beecrypt-4.2.0-link.patch
+Patch3:		beecrypt-4.2.1-py_platsitedir.diff
 BuildRequires:	doxygen
 BuildRequires:	tetex-dvips
 BuildRequires:	tetex-latex
@@ -131,11 +132,14 @@ files needed for using java with beecrypt.
 %patch0 -p1 -b .biarch
 %patch1 -p0 -b .lib64
 %patch2 -p1 -b .link
+%patch3 -p0
 
 %build
 %if %cvs
 ./autogen.sh
 %endif
+
+./autogen.sh
 
 export OPENMP_LIBS="-lgomp"
 
@@ -166,7 +170,7 @@ rm -fr %{buildroot}
 %makeinstall_std
 
 # XXX nuke unpackaged files, artifacts from using libtool to produce module
-rm -f %{buildroot}%{_libdir}/python%{pyver}/site-packages/_bc.*a
+rm -f %{buildroot}%{py_platsitedir}/_bc.*a
 
 %if %mdkversion < 200900
 %post -n %{libname} -p /sbin/ldconfig
@@ -215,7 +219,7 @@ rm -fr %{buildroot}
 %if %{?with_python:1}0
 %files python
 %defattr(-,root,root)
-%{_libdir}/python%{pyver}/site-packages/_bc.so
+%{py_platsitedir}/_bc.so
 %endif
 
 %if %{?with_cplusplus:1}0
