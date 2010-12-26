@@ -172,30 +172,6 @@ rm -fr %{buildroot}
 # XXX nuke unpackaged files, artifacts from using libtool to produce module
 rm -f %{buildroot}%{py_platsitedir}/_bc.*a
 
-%if %mdkversion < 200900
-%post -n %{libname} -p /sbin/ldconfig
-%endif
-
-%if %mdkversion < 200900
-%postun -n %{libname} -p /sbin/ldconfig
-%endif
-
-%if %mdkversion < 200900
-%post -n %{libname_cxx} -p /sbin/ldconfig
-%endif
-
-%if %mdkversion < 200900
-%postun -n %{libname_cxx} -p /sbin/ldconfig
-%endif
-
-%if %mdkversion < 200900
-%post -n %{libname_java} -p /sbin/ldconfig
-%endif
-
-%if %mdkversion < 200900
-%postun -n %{libname_java} -p /sbin/ldconfig
-%endif
-
 %clean
 rm -fr %{buildroot}
 
