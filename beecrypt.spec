@@ -1,6 +1,6 @@
 %define cvs 0
 %if %cvs
-%define release %mkrel 0.%cvs.2
+%define release %mkrel 0.%cvs.3
 %else
 %define release %mkrel 4
 %endif
