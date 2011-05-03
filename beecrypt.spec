@@ -1,8 +1,8 @@
 %define cvs 0
 %if %cvs
-%define release %mkrel 0.%cvs.3
+%define release %mkrel 0.%cvs.4
 %else
-%define release %mkrel 5
+%define release %mkrel 6
 %endif
 
 %define	with_python --with-python=%_bindir/python
