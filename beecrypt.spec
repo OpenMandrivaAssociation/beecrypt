@@ -133,11 +133,11 @@ files needed for using java with beecrypt.
 %endif
 
 %make
-cd include/beecrypt
+pushd include/beecrypt
 doxygen
 cd c++
 doxygen
-cd ../../..
+popd
 
 # XXX delete next line to build with legacy, non-check aware, rpmbuild.
 %check
