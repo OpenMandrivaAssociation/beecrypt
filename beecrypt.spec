@@ -37,6 +37,7 @@ Patch3:		beecrypt-4.2.1-py_platsitedir.diff
 BuildRequires:	doxygen
 BuildRequires:	tetex-dvips
 BuildRequires:	tetex-latex
+BuildRequires:	texlive-doublestroke
 BuildRequires:	graphviz
 BuildRequires:	m4
 BuildRequires:	gomp-devel
