@@ -120,9 +120,6 @@ files needed for using java with beecrypt.
 ./autogen.sh
 
 %build
-
-export OPENMP_LIBS="-lgomp"
-
 %configure2_5x	--enable-shared \
 		--enable-static \
 %if %{with python}
@@ -132,9 +129,8 @@ export OPENMP_LIBS="-lgomp"
 		--with-cplusplus \
 %endif
 %if %{with java}
-		--with-java \
+		--with-java
 %endif
-    CPPFLAGS="-I%{_includedir}/python%{py_ver}"
 
 %make
 cd include/beecrypt
