@@ -1,7 +1,9 @@
-%define	with_python --with-python=%_bindir/python
-%define with_cplusplus --with-cplusplus
+%bcond_without	python
+%bcond_without	cplusplus
 %ifnarch %mips %java
-%define with_java --with-java
+%bcond_without	java
+%else
+%bcond_with	java
 %endif
 
 %define major 7
@@ -13,7 +15,7 @@
 Summary:	An open source cryptography library
 Name:		beecrypt
 Version:	4.2.1
-Release:	%{release}
+Release:	8
 Group:		System/Libraries
 License:	LGPLv2+
 URL:		http://beecrypt.sourceforge.net/
@@ -38,16 +40,15 @@ BuildRequires:	tetex-latex
 BuildRequires:	graphviz
 BuildRequires:	m4
 BuildRequires:	libgomp-devel
-%if %{?with_python:1}0
-BuildRequires:	python-devel >= %{pyver}
+%if %{with python}
+BuildRequires:	python-devel
 %endif
-%if %{?with_cplusplus:1}0
+%if %{with cplusplus}
 BuildRequires:	icu-devel
 %endif
-%if %{?with_java:1}0
+%if %{with java}
 BuildRequires:	java-rpmbuild
 %endif
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 Beecrypt is a general-purpose cryptography library.
@@ -77,19 +78,17 @@ Obsoletes:	%{mklibname beecrypt 7 -d}
 Beecrypt is a general-purpose cryptography library.  This package contains
 files needed for developing applications with beecrypt.
 
-%if %{?with_python:1}0
+%if %{with python}
 %package	python
 Summary:	Files needed for python applications using beecrypt
 Group:		Development/C
-Requires:	python >= %{pyver}
-Requires:	%{libname} = %{version}
 
 %description	python
 Beecrypt is a general-purpose cryptography library.  This package contains
 files needed for using python with beecrypt.
 %endif
 
-%if %{?with_cplusplus:1}0
+%if %{with cplusplus}
 %package -n	%{libname_cxx}
 Summary:	Files needed for C++ applications using beecrypt
 Group:		Development/C++
@@ -100,7 +99,7 @@ Beecrypt is a general-purpose cryptography library.  This package contains
 files needed for using C++ with beecrypt.
 %endif
 
-%if %{?with_java:1}0
+%if %{with java}
 %package -n	%{libname_java}
 Summary:	Files needed for java applications using beecrypt
 Group:		Development/C
@@ -124,13 +123,18 @@ files needed for using java with beecrypt.
 
 export OPENMP_LIBS="-lgomp"
 
-%configure2_5x \
-    --enable-shared \
-    --enable-static \
-    %{?with_python} \
-    %{?with_cplusplus} \
-    %{?with_java} \
-    CPPFLAGS="-I%{_includedir}/python%{pyver}"
+%configure2_5x	--enable-shared \
+		--enable-static \
+%if %{with python}
+		--with-python=%{_bindir}/python \
+%endif
+%if %{with cplusplus}
+		--with-cplusplus \
+%endif
+%if %{with java}
+		--with-java \
+%endif
+    CPPFLAGS="-I%{_includedir}/python%{py_ver}"
 
 %make
 cd include/beecrypt
@@ -165,20 +169,20 @@ rm -fr %{buildroot}
 %defattr(-,root,root)
 %doc BUGS docs/html docs/latex
 %{_includedir}/%{name}
-%if %{?with_cplusplus:1}0
+%if %{with cplusplus}
 %{_libdir}/%{name}/base.so
 %{_libdir}/%{name}/*.*a
 %endif
 %{_libdir}/*.a
 %{_libdir}/*.so
 
-%if %{?with_python:1}0
+%if %{with python}
 %files python
 %defattr(-,root,root)
 %{py_platsitedir}/_bc.so
 %endif
 
-%if %{?with_cplusplus:1}0
+%if %{with cplusplus}
 %files -n %{libname_cxx}
 %defattr(-,root,root)
 %config %{_sysconfdir}/beecrypt.conf
@@ -187,7 +191,7 @@ rm -fr %{buildroot}
 %{_libdir}/libbeecrypt_cxx.so.%{major}*
 %endif
 
-%if %{?with_java:1}0
+%if %{with java}
 %files -n %{libname_java}
 %defattr(-,root,root)
 %{_libdir}/libbeecrypt_java.so.%{major}*
