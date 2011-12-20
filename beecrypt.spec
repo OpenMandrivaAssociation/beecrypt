@@ -150,23 +150,16 @@ cat /proc/cpuinfo
 make bench || :
 
 %install
-rm -fr %{buildroot}
-
 %makeinstall_std
 
 # XXX nuke unpackaged files, artifacts from using libtool to produce module
 rm -f %{buildroot}%{py_platsitedir}/_bc.*a
 
-%clean
-rm -fr %{buildroot}
-
 %files -n %{libname}
-%defattr(-,root,root)
 %doc README BENCHMARKS
 %{_libdir}/libbeecrypt.so.%{major}*
 
 %files -n %{develname}
-%defattr(-,root,root)
 %doc BUGS docs/html docs/latex
 %{_includedir}/%{name}
 %if %{with cplusplus}
@@ -186,7 +179,6 @@ rm -fr %{buildroot}
 
 %if %{with cplusplus}
 %files -n %{libname_cxx}
-%defattr(-,root,root)
 %config %{_sysconfdir}/beecrypt.conf
 %dir %{_libdir}/%{name}
 %{_libdir}/%{name}/base.so.*
@@ -195,6 +187,5 @@ rm -fr %{buildroot}
 
 %if %{with java}
 %files -n %{libname_java}
-%defattr(-,root,root)
 %{_libdir}/libbeecrypt_java.so.%{major}*
 %endif
