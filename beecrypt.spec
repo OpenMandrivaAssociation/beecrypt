@@ -39,7 +39,7 @@ BuildRequires:	tetex-dvips
 BuildRequires:	tetex-latex
 BuildRequires:	graphviz
 BuildRequires:	m4
-BuildRequires:	libgomp-devel
+BuildRequires:	gomp-devel
 %if %{with python}
 BuildRequires:	python-devel
 %endif
