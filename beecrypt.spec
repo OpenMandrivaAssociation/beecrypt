@@ -1,10 +1,3 @@
-%define cvs 0
-%if %cvs
-%define release %mkrel 0.%cvs.5
-%else
-%define release %mkrel 7
-%endif
-
 %define	with_python --with-python=%_bindir/python
 %define with_cplusplus --with-cplusplus
 %ifnarch %mips %java
@@ -24,11 +17,7 @@ Release:	%{release}
 Group:		System/Libraries
 License:	LGPLv2+
 URL:		http://beecrypt.sourceforge.net/
-%if %cvs
-Source0:	%{name}-%{cvs}.tar.lzma
-%else
 Source0:	http://prdownloads.sourceforge.net/beecrypt/%{name}-%{version}.tar.gz
-%endif
 Patch0:		beecrypt-4.1.2-biarch.patch
 # AdamW: ugly patch simply defines upstream's odd libaltdir variable to be 
 # equal to libdir in one places. Also replaces a similarly weird pythondir
@@ -135,10 +124,6 @@ files needed for using java with beecrypt.
 %patch3 -p0
 
 %build
-%if %cvs
-./autogen.sh
-%endif
-
 ./autogen.sh
 
 export OPENMP_LIBS="-lgomp"
