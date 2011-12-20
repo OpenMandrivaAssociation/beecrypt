@@ -71,7 +71,6 @@ Requires:	%{libname_java} = %{version}
 %endif
 Requires:	%{libname} = %{version}
 Provides:	%{name}-devel = %{version}-%{release}
-Provides:	lib%{name}-devel = %{version}-%{release}
 Obsoletes:	%{mklibname beecrypt 7 -d}
 
 %description -n	%{develname}
