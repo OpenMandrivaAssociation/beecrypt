@@ -63,10 +63,10 @@ Beecrypt is a general-purpose cryptography library.
 %package -n	%{develname}
 Summary:	Files needed for developing applications with beecrypt
 Group:		Development/C
-%if %{?with_cplusplus:1}0
+%if %{with cplusplus}
 Requires:	%{libname_cxx} = %{version}
 %endif
-%if %{?with_java:1}0
+%if %{with java}
 Requires:	%{libname_java} = %{version}
 %endif
 Requires:	%{libname} = %{version}
