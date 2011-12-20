@@ -112,19 +112,15 @@ files needed for using java with beecrypt.
 %endif
 
 %prep
-
-%if %cvs
-%setup -q -n %{name}
-%else
 %setup -q
-%endif
 %patch0 -p1 -b .biarch
 %patch1 -p0 -b .lib64
 %patch2 -p1 -b .link
 %patch3 -p0
 
-%build
 ./autogen.sh
+
+%build
 
 export OPENMP_LIBS="-lgomp"
 
