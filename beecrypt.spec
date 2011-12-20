@@ -189,7 +189,6 @@ rm -fr %{buildroot}
 %{_libdir}/%{name}/*.*a
 %endif
 %{_libdir}/*.a
-%{_libdir}/*.la
 %{_libdir}/*.so
 
 %if %{?with_python:1}0
