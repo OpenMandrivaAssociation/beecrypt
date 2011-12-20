@@ -174,6 +174,8 @@ rm -fr %{buildroot}
 %{_libdir}/%{name}/*.*a
 %endif
 %{_libdir}/*.a
+# package lacks any pkgconfig file, thus libtool file is still required
+%{_libdir}/*.la
 %{_libdir}/*.so
 
 %if %{with python}
