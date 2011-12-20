@@ -64,13 +64,13 @@ Beecrypt is a general-purpose cryptography library.
 Summary:	Files needed for developing applications with beecrypt
 Group:		Development/C
 %if %{with cplusplus}
-Requires:	%{libname_cxx} = %{version}
+Requires:	%{libname_cxx} = %{EVRD}
 %endif
 %if %{with java}
-Requires:	%{libname_java} = %{version}
+Requires:	%{libname_java} = %{EVRD}
 %endif
-Requires:	%{libname} = %{version}
-Provides:	%{name}-devel = %{version}-%{release}
+Requires:	%{libname} = %{EVRD}
+Provides:	%{name}-devel = %{EVRD}
 Obsoletes:	%{mklibname beecrypt 7 -d}
 
 %description -n	%{develname}
@@ -91,7 +91,7 @@ files needed for using python with beecrypt.
 %package -n	%{libname_cxx}
 Summary:	Files needed for C++ applications using beecrypt
 Group:		Development/C++
-Requires:	%{libname} = %{version}
+Requires:	%{libname} = %{EVRD}
 
 %description -n	%{libname_cxx}
 Beecrypt is a general-purpose cryptography library.  This package contains
@@ -102,7 +102,7 @@ files needed for using C++ with beecrypt.
 %package -n	%{libname_java}
 Summary:	Files needed for java applications using beecrypt
 Group:		Development/C
-Requires:	%{libname} = %{version}
+Requires:	%{libname} = %{EVRD}
 
 %description -n	%{libname_java}
 Beecrypt is a general-purpose cryptography library.  This package contains
