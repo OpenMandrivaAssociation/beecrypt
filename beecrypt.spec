@@ -169,7 +169,6 @@ rm -f %{buildroot}%{py_platsitedir}/_bc.*a
 
 %if %{with python}
 %files python
-%defattr(-,root,root)
 %{py_platsitedir}/_bc.so
 %endif
 
