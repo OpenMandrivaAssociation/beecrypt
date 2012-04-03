@@ -164,9 +164,7 @@ rm -f %{buildroot}%{py_platsitedir}/_bc.*a
 %{_libdir}/%{name}/base.so
 %{_libdir}/%{name}/*.*a
 %endif
-%{_libdir}/*.a
-# package lacks any pkgconfig file, thus libtool file is still required
-%{_libdir}/*.la
+%{_libdir}/*.*a
 %{_libdir}/*.so
 
 %if %{with python}
