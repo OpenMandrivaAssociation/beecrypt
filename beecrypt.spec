@@ -15,7 +15,7 @@
 Summary:	An open source cryptography library
 Name:		beecrypt
 Version:	4.2.1
-Release:	8
+Release:	9
 Group:		System/Libraries
 License:	LGPLv2+
 URL:		http://beecrypt.sourceforge.net/
@@ -46,7 +46,7 @@ BuildRequires:	gomp-devel
 BuildRequires:	python-devel
 %endif
 %if %{with cplusplus}
-BuildRequires:	icu-devel
+BuildRequires:	icu-devel >= 49.0
 %endif
 %if %{with java}
 BuildRequires:	java-rpmbuild
