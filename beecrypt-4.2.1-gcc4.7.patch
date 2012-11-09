@@ -1,0 +1,11 @@
+--- beecrypt-4.2.1/include/beecrypt/c++/util/AbstractSet.h.orig	2012-04-02 17:39:17.914823345 -0300
++++ beecrypt-4.2.1/include/beecrypt/c++/util/AbstractSet.h	2012-04-02 17:39:20.944823622 -0300
+@@ -56,7 +56,7 @@ namespace beecrypt {
+ 					if (c->size() != size())
+ 						return false;
+ 
+-					return containsAll(*c);
++					return this->containsAll(*c);
+ 				}
+ 				return false;
+ 			}

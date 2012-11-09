@@ -1,0 +1,22 @@
+--- java/Makefile.am	2007-04-25 01:16:15.000000000 -0700
++++ java/Makefile.am.new	2007-04-25 01:56:59.000000000 -0700
+@@ -26,7 +26,7 @@ LIBBEECRYPT_JAVA_LT_REVISION = 0
+ 
+ INCLUDES = -I$(top_srcdir)/include
+ 
+-libaltdir=$(prefix)/lib@LIBALT@
++libaltdir=$(libdir)
+ 
+ libalt_LTLIBRARIES = libbeecrypt_java.la
+
+--- python/Makefile.am	2007-04-25 01:16:15.000000000 -0700
++++ python/Makefile.am.new	2007-04-25 02:17:13.000000000 -0700
+@@ -15,7 +15,7 @@ mylibs = $(top_builddir)/libbeecrypt.la
+ 
+ LDADD =
+ 
+-pythondir = @PYTHONLIB@
++pythondir = $(libdir)/python2.7/site-packages
+ python_LTLIBRARIES = _bc.la
+ 
+ _bc_la_SOURCES = _bc-py.c mpw-py.c rng-py.c
