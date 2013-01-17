@@ -1,6 +1,6 @@
 %bcond_without	python
 %bcond_without	cplusplus
-%ifnarch %mips %arm
+%ifnarch %{mips} %{arm}
 %bcond_without	java
 %else
 %bcond_with	java
@@ -15,7 +15,7 @@
 Summary:	An open source cryptography library
 Name:		beecrypt
 Version:	4.2.1
-Release:	10
+Release:	11
 Group:		System/Libraries
 License:	LGPLv2+
 URL:		http://beecrypt.sourceforge.net/
@@ -149,13 +149,16 @@ make bench || :
 
 %install
 %makeinstall_std
+mkdir %{buildroot}/%{_lib}
+mv %{buildroot}%{_libdir}/libbeecrypt.so.%{major}* %{buildroot}/%{_lib}
+ln -srf %{buildroot}/%{_lib}/libbeecrypt.so.%{major}.*.* %{buildroot}%{_libdir}/libbeecrypt.so
 
 # XXX nuke unpackaged files, artifacts from using libtool to produce module
 rm -f %{buildroot}%{py_platsitedir}/_bc.*a
 
 %files -n %{libname}
 %doc README BENCHMARKS
-%{_libdir}/libbeecrypt.so.%{major}*
+/%{_lib}/libbeecrypt.so.%{major}*
 
 %files -n %{develname}
 %doc BUGS docs/html docs/latex
