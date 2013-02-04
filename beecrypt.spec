@@ -15,7 +15,7 @@
 Summary:	An open source cryptography library
 Name:		beecrypt
 Version:	4.2.1
-Release:	11
+Release:	12
 Group:		System/Libraries
 License:	LGPLv2+
 URL:		http://beecrypt.sourceforge.net/
@@ -35,6 +35,7 @@ Patch1:		beecrypt-4.2.0-lib64.patch
 Patch2:		beecrypt-4.2.0-link.patch
 Patch3:		beecrypt-4.2.1-py_platsitedir.diff
 Patch4:		beecrypt-4.2.1-gcc4.7.patch
+BuildConflicts:	libreoffice-core
 BuildRequires:	doxygen
 BuildRequires:	tetex-dvips
 BuildRequires:	tetex-latex
