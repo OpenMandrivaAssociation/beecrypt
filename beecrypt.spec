@@ -6,11 +6,11 @@
 %bcond_with	java
 %endif
 
-%define major 7
+%define major	7
 %define libname %mklibname %{name} %{major}
 %define libname_cxx %mklibname %{name}_cxx %{major}
 %define libname_java %mklibname %{name}_java %{major}
-%define develname %mklibname %{name} -d
+%define devname %mklibname %{name} -d
 
 Summary:	An open source cryptography library
 Name:		beecrypt
@@ -18,7 +18,7 @@ Version:	4.2.1
 Release:	12
 Group:		System/Libraries
 License:	LGPLv2+
-URL:		http://beecrypt.sourceforge.net/
+Url:		http://beecrypt.sourceforge.net/
 Source0:	http://prdownloads.sourceforge.net/beecrypt/%{name}-%{version}.tar.gz
 Patch0:		beecrypt-4.1.2-biarch.patch
 # AdamW: ugly patch simply defines upstream's odd libaltdir variable to be 
@@ -35,23 +35,24 @@ Patch1:		beecrypt-4.2.0-lib64.patch
 Patch2:		beecrypt-4.2.0-link.patch
 Patch3:		beecrypt-4.2.1-py_platsitedir.diff
 Patch4:		beecrypt-4.2.1-gcc4.7.patch
-BuildConflicts:	libreoffice-core
+
 BuildRequires:	doxygen
+BuildRequires:	graphviz
+BuildRequires:	m4
 BuildRequires:	tetex-dvips
 BuildRequires:	tetex-latex
 BuildRequires:	texlive-doublestroke
-BuildRequires:	graphviz
-BuildRequires:	m4
 BuildRequires:	gomp-devel
 %if %{with python}
-BuildRequires:	python-devel
+BuildRequires:	pkgconfig(python)
 %endif
 %if %{with cplusplus}
-BuildRequires:	icu-devel >= 49.0
+BuildRequires:	pkgconfig(icu-uc)
 %endif
 %if %{with java}
 BuildRequires:	java-rpmbuild
 %endif
+BuildConflicts:	libreoffice-core
 
 %description
 Beecrypt is a general-purpose cryptography library.
@@ -63,7 +64,7 @@ Group:		System/Libraries
 %description -n %{libname}
 Beecrypt is a general-purpose cryptography library.
 
-%package -n	%{develname}
+%package -n	%{devname}
 Summary:	Files needed for developing applications with beecrypt
 Group:		Development/C
 %if %{with cplusplus}
@@ -74,18 +75,18 @@ Requires:	%{libname_java} = %{EVRD}
 %endif
 Requires:	%{libname} = %{EVRD}
 Provides:	%{name}-devel = %{EVRD}
-Obsoletes:	%{mklibname beecrypt 7 -d}
 
-%description -n	%{develname}
+%description -n	%{devname}
 Beecrypt is a general-purpose cryptography library.  This package contains
 files needed for developing applications with beecrypt.
 
 %if %{with python}
-%package	python
+%package -n	python-%{name}
 Summary:	Files needed for python applications using beecrypt
 Group:		Development/C
+%rename		%{name}-python
 
-%description	python
+%description -n	python-%{name}
 Beecrypt is a general-purpose cryptography library.  This package contains
 files needed for using python with beecrypt.
 %endif
@@ -94,7 +95,6 @@ files needed for using python with beecrypt.
 %package -n	%{libname_cxx}
 Summary:	Files needed for C++ applications using beecrypt
 Group:		Development/C++
-Requires:	%{libname} = %{EVRD}
 
 %description -n	%{libname_cxx}
 Beecrypt is a general-purpose cryptography library.  This package contains
@@ -105,7 +105,6 @@ files needed for using C++ with beecrypt.
 %package -n	%{libname_java}
 Summary:	Files needed for java applications using beecrypt
 Group:		Development/C
-Requires:	%{libname} = %{EVRD}
 
 %description -n	%{libname_java}
 Beecrypt is a general-purpose cryptography library.  This package contains
@@ -123,16 +122,17 @@ files needed for using java with beecrypt.
 ./autogen.sh
 
 %build
-%configure2_5x	--enable-shared \
-		--enable-static \
+%configure2_5x \
+	--enable-shared \
+	--enable-static \
 %if %{with python}
-		--with-python=%{_bindir}/python \
+	--with-python=%{_bindir}/python \
 %endif
 %if %{with cplusplus}
-		--with-cplusplus \
+	--with-cplusplus \
 %endif
 %if %{with java}
-		--with-java
+	--with-java
 %endif
 
 %make
@@ -161,7 +161,7 @@ rm -f %{buildroot}%{py_platsitedir}/_bc.*a
 %doc README BENCHMARKS
 /%{_lib}/libbeecrypt.so.%{major}*
 
-%files -n %{develname}
+%files -n %{devname}
 %doc BUGS docs/html docs/latex
 %{_includedir}/%{name}
 %if %{with cplusplus}
@@ -172,7 +172,7 @@ rm -f %{buildroot}%{py_platsitedir}/_bc.*a
 %{_libdir}/*.so
 
 %if %{with python}
-%files python
+%files -n python-%{name}
 %{py_platsitedir}/_bc.so
 %endif
 
@@ -188,7 +188,6 @@ rm -f %{buildroot}%{py_platsitedir}/_bc.*a
 %files -n %{libname_java}
 %{_libdir}/libbeecrypt_java.so.%{major}*
 %endif
-
 
 %changelog
 * Sat Apr 07 2012 Bernhard Rosenkraenzer <bero@bero.eu> 4.2.1-9
