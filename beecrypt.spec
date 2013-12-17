@@ -1,6 +1,6 @@
 %bcond_without	python
 %bcond_without	cplusplus
-%ifnarch %{mips} %{arm}
+%ifnarch %{mips} %{arm} aarch64
 %bcond_without	java
 %else
 %bcond_with	java
