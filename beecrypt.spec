@@ -35,7 +35,7 @@ Patch1:		beecrypt-4.2.0-lib64.patch
 Patch2:		beecrypt-4.2.0-link.patch
 Patch3:		beecrypt-4.2.1-py_platsitedir.diff
 Patch4:		beecrypt-4.2.1-gcc4.7.patch
-Patch5:		beecrypt-aarch64.patch
+Patch5:         beecrypt_arm_configure_fix.patch
 
 BuildRequires:	doxygen
 BuildRequires:	graphviz
@@ -121,9 +121,17 @@ files needed for using java with beecrypt.
 %patch4 -p1
 %patch5 -p1
 
+
+for f in config.guess config.sub ; do
+        test -f /usr/share/libtool/config/$f || continue
+        find . -type f -name $f -exec cp /usr/share/libtool/config/$f \{\} \;
+done
+
+
 ./autogen.sh
 
 %build
+export OPENMP_LIBS="-lgomp"
 %configure2_5x \
 	--enable-shared \
 	--enable-static \

@@ -1,0 +1,17 @@
+---
+ acinclude.m4 |    2 	1 +	1 -	0 !
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+Index: beecrypt-4.2.1/acinclude.m4
+===================================================================
+--- beecrypt-4.2.1.orig/acinclude.m4
++++ beecrypt-4.2.1/acinclude.m4
+@@ -1408,7 +1408,7 @@ AC_DEFUN([BEE_ASM_SOURCES],[
+   echo > sha1opt.s
+   if test "$ac_enable_debug" != yes; then
+     case $bc_target_arch in
+-    arm)
++    arm*)
+       AC_CONFIG_COMMANDS([mpopt.arm],[
+         m4 $srcdir/gas/mpopt.arm.m4 > mpopt.s
+         ])
