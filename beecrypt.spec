@@ -16,7 +16,7 @@
 Summary:	An open source cryptography library
 Name:		beecrypt
 Version:	4.2.1
-Release:	18
+Release:	20
 Group:		System/Libraries
 License:	LGPLv2+
 Url:		http://beecrypt.sourceforge.net/
@@ -138,7 +138,7 @@ done
 
 %build
 export OPENMP_LIBS="-lgomp"
-%configure2_5x \
+%configure \
 	--enable-shared \
 	--enable-static \
 %if %{with python}
