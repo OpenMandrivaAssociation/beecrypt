@@ -50,7 +50,7 @@ BuildRequires:	texlive-doublestroke
 %endif
 BuildRequires:	gomp-devel
 %if %{with python}
-BuildRequires:	pkgconfig(python)
+BuildRequires:	pkgconfig(python2)
 %endif
 %if %{with cplusplus}
 BuildRequires:	pkgconfig(icu-uc)
