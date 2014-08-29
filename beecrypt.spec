@@ -189,12 +189,15 @@ rm -f %{buildroot}%{py_platsitedir}/_bc.*a
 %{_libdir}/%{name}/base.so
 %{_libdir}/%{name}/*.a
 %endif
+%if %{with python}
+%{py2_platsitedir}/_bc.a
+%endif
 %{_libdir}/*.a
 %{_libdir}/*.so
 
 %if %{with python}
 %files -n python-%{name}
-%{py_platsitedir}/_bc.so
+%{py2_platsitedir}/_bc.so
 %endif
 
 %if %{with cplusplus}
