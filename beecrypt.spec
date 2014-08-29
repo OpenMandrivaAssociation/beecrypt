@@ -142,7 +142,7 @@ export OPENMP_LIBS="-lgomp"
 	--enable-shared \
 	--enable-static \
 %if %{with python}
-	--with-python=%{_bindir}/python \
+	--with-python=%{__python2} \
 %endif
 %if %{with cplusplus}
 	--with-cplusplus \
