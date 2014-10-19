@@ -1,7 +1,7 @@
 %bcond_without	python
 %bcond_without	cplusplus
 %bcond_with	docs
-%ifnarch %{mips} %{arm} aarch64
+%ifnarch %{mips} %{armx}
 %bcond_without	java
 %else
 %bcond_with	java
@@ -137,6 +137,11 @@ done
 ./autogen.sh
 
 %build
+# text relocation error
+%ifarch aarch64
+export CC=gcc
+export CXX=g++
+%endif
 export OPENMP_LIBS="-lgomp"
 %configure \
 	--enable-shared \
