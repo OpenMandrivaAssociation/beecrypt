@@ -16,7 +16,7 @@
 Summary:	An open source cryptography library
 Name:		beecrypt
 Version:	4.2.1
-Release:	24
+Release:	25
 Group:		System/Libraries
 License:	LGPLv2+
 Url:		http://beecrypt.sourceforge.net/
@@ -143,6 +143,7 @@ export CC=gcc
 export CXX=g++
 %endif
 export OPENMP_LIBS="-lgomp"
+export ac_cv_java_include="-I%{_jvmdir}/java/include -I%{_jvmdir}/java/include/linux"
 %configure \
 	--enable-shared \
 	--enable-static \
