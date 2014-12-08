@@ -56,7 +56,6 @@ BuildRequires:	pkgconfig(python2)
 BuildRequires:	pkgconfig(icu-uc)
 %endif
 %if %{with java}
-BuildRequires:	java-rpmbuild
 BuildRequires:	java-devel-openjdk
 %endif
 BuildConflicts:	libreoffice-core
