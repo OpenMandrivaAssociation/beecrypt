@@ -8,6 +8,7 @@
 %endif
 
 %define major	7
+%define	debug_package %nil
 %define libname %mklibname %{name} %{major}
 %define libname_cxx %mklibname %{name}_cxx %{major}
 %define libname_java %mklibname %{name}_java %{major}
