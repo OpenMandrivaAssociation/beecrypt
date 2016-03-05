@@ -13,6 +13,8 @@
 %define libname_cxx %mklibname %{name}_cxx %{major}
 %define libname_java %mklibname %{name}_java %{major}
 %define devname %mklibname %{name} -d
+# b64encode: error: undefined reference to '__aeabi_idiv'
+%define _disable_lto 1
 
 Summary:	An open source cryptography library
 Name:		beecrypt
