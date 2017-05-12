@@ -19,7 +19,7 @@
 Summary:	An open source cryptography library
 Name:		beecrypt
 Version:	4.2.1
-Release:	32
+Release:	33
 Group:		System/Libraries
 License:	LGPLv2+
 Url:		http://beecrypt.sourceforge.net/
@@ -51,7 +51,9 @@ BuildRequires:	tetex-dvips
 BuildRequires:	tetex-latex
 BuildRequires:	texlive-doublestroke
 %endif
+%ifarch aarch64
 BuildRequires:	gomp-devel
+%endif
 %if %{with python}
 BuildRequires:	pkgconfig(python2)
 %endif
@@ -143,8 +145,13 @@ done
 %ifarch aarch64
 export CC=gcc
 export CXX=g++
-%endif
 export OPENMP_LIBS="-lgomp"
+%else
+export OPENMP_LIBS="-lomp"
+%endif
+
+%global optflags %optflags -fopenmp
+
 export ac_cv_java_include="-I%{_jvmdir}/java/include -I%{_jvmdir}/java/include/linux"
 %configure \
 	--enable-shared \
