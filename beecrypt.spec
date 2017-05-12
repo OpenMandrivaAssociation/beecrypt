@@ -156,6 +156,7 @@ export ac_cv_java_include="-I%{_jvmdir}/java/include -I%{_jvmdir}/java/include/l
 %configure \
 	--enable-shared \
 	--enable-static \
+	--enable-openmp \
 %if %{with python}
 	--with-python=%{__python2} \
 %endif
