@@ -36,7 +36,6 @@ Patch0:		beecrypt-4.1.2-biarch.patch
 # standard libdir variable. (This is mostly fixed now (2008/02), only two
 # instances left).
 Patch1:		beecrypt-4.2.0-lib64.patch
-Patch2:		beecrypt-4.2.0-link.patch
 Patch3:		beecrypt-4.2.1-py_platsitedir.diff
 Patch4:		beecrypt-4.2.1-gcc4.7.patch
 Patch5:		beecrypt_arm_configure_fix.patch
@@ -121,12 +120,7 @@ files needed for using java with beecrypt.
 
 %prep
 %setup -q
-%patch0 -p1 -b .biarch
-%patch1 -p0 -b .lib64
-%patch2 -p1 -b .link
-%patch3 -p0
-%patch4 -p1
-%patch5 -p1
+%apply_patches
 
 %build
 # text relocation error
