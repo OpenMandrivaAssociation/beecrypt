@@ -1,5 +1,5 @@
 %bcond_without	python
-%bcond_without	cplusplus
+%bcond_with	cplusplus
 %bcond_with	docs
 %ifnarch %{mips} %{armx}
 %bcond_without	java
@@ -19,7 +19,7 @@
 Summary:	An open source cryptography library
 Name:		beecrypt
 Version:	4.2.1
-Release:	33
+Release:	34
 Group:		System/Libraries
 License:	LGPLv2+
 Url:		http://beecrypt.sourceforge.net/
@@ -162,6 +162,8 @@ export ac_cv_java_include="-I%{_jvmdir}/java/include -I%{_jvmdir}/java/include/l
 %endif
 %if %{with cplusplus}
 	--with-cplusplus \
+%else
+	--without-cplusplus \
 %endif
 %if %{with java}
 	--with-java
