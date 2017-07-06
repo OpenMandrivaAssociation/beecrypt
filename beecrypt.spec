@@ -51,9 +51,6 @@ BuildRequires:	tetex-dvips
 BuildRequires:	tetex-latex
 BuildRequires:	texlive-doublestroke
 %endif
-%ifarch aarch64
-BuildRequires:	gomp-devel
-%endif
 %if %{with python}
 BuildRequires:	pkgconfig(python2)
 %endif
@@ -131,26 +128,15 @@ files needed for using java with beecrypt.
 %patch4 -p1
 %patch5 -p1
 
-
-for f in config.guess config.sub ; do
-        test -f /usr/share/libtool/config/$f || continue
-        find . -type f -name $f -exec cp /usr/share/libtool/config/$f \{\} \;
-done
-
-
-./autogen.sh
-
 %build
 # text relocation error
 %ifarch aarch64
-export CC=gcc
-export CXX=g++
-export OPENMP_LIBS="-lgomp"
+%global optflags %optflags -fopenmp -fuse-ld=bfd
 %else
-export OPENMP_LIBS="-lomp"
+%global optflags %optflags -fopenmp
 %endif
 
-%global optflags %optflags -fopenmp
+export OPENMP_LIBS="-lomp"
 
 export ac_cv_java_include="-I%{_jvmdir}/java/include -I%{_jvmdir}/java/include/linux"
 %configure \
