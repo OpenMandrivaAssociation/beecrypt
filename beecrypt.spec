@@ -1,5 +1,5 @@
 %bcond_without	python
-%bcond_without	cplusplus
+%bcond_with	cplusplus
 %bcond_with	docs
 %ifnarch %{mips} %{armx}
 %bcond_without	java
@@ -19,7 +19,7 @@
 Summary:	An open source cryptography library
 Name:		beecrypt
 Version:	4.2.1
-Release:	31
+Release:	34
 Group:		System/Libraries
 License:	LGPLv2+
 Url:		http://beecrypt.sourceforge.net/
@@ -36,7 +36,6 @@ Patch0:		beecrypt-4.1.2-biarch.patch
 # standard libdir variable. (This is mostly fixed now (2008/02), only two
 # instances left).
 Patch1:		beecrypt-4.2.0-lib64.patch
-Patch2:		beecrypt-4.2.0-link.patch
 Patch3:		beecrypt-4.2.1-py_platsitedir.diff
 Patch4:		beecrypt-4.2.1-gcc4.7.patch
 Patch5:		beecrypt_arm_configure_fix.patch
@@ -51,7 +50,6 @@ BuildRequires:	tetex-dvips
 BuildRequires:	tetex-latex
 BuildRequires:	texlive-doublestroke
 %endif
-BuildRequires:	gomp-devel
 %if %{with python}
 BuildRequires:	pkgconfig(python2)
 %endif
@@ -122,38 +120,30 @@ files needed for using java with beecrypt.
 
 %prep
 %setup -q
-%patch0 -p1 -b .biarch
-%patch1 -p0 -b .lib64
-%patch2 -p1 -b .link
-%patch3 -p0
-%patch4 -p1
-%patch5 -p1
-
-
-for f in config.guess config.sub ; do
-        test -f /usr/share/libtool/config/$f || continue
-        find . -type f -name $f -exec cp /usr/share/libtool/config/$f \{\} \;
-done
-
-
-./autogen.sh
+%apply_patches
 
 %build
 # text relocation error
 %ifarch aarch64
-export CC=gcc
-export CXX=g++
+%global optflags %optflags -fopenmp -fuse-ld=bfd
+%else
+%global optflags %optflags -fopenmp
 %endif
-export OPENMP_LIBS="-lgomp"
+
+export OPENMP_LIBS="-lomp"
+
 export ac_cv_java_include="-I%{_jvmdir}/java/include -I%{_jvmdir}/java/include/linux"
 %configure \
 	--enable-shared \
 	--enable-static \
+	--enable-openmp \
 %if %{with python}
 	--with-python=%{__python2} \
 %endif
 %if %{with cplusplus}
 	--with-cplusplus \
+%else
+	--without-cplusplus \
 %endif
 %if %{with java}
 	--with-java
