@@ -1,14 +1,14 @@
-%bcond_without	python
-%bcond_with	cplusplus
-%bcond_with	docs
+%bcond_without python
+%bcond_with cplusplus
+%bcond_with docs
 %ifnarch %{mips} %{armx}
-%bcond_without	java
+%bcond_without java
 %else
-%bcond_with	java
+%bcond_with java
 %endif
 
-%define major	7
-%define	debug_package %nil
+%define major 7
+%define debug_package %nil
 %define libname %mklibname %{name} %{major}
 %define libname_cxx %mklibname %{name}_cxx %{major}
 %define libname_java %mklibname %{name}_java %{major}
@@ -19,7 +19,7 @@
 Summary:	An open source cryptography library
 Name:		beecrypt
 Version:	4.2.1
-Release:	36
+Release:	37
 Group:		System/Libraries
 License:	LGPLv2+
 Url:		http://beecrypt.sourceforge.net/
@@ -64,14 +64,14 @@ BuildConflicts:	libreoffice-core
 %description
 Beecrypt is a general-purpose cryptography library.
 
-%package -n	%{libname}
+%package -n %{libname}
 Summary:	An open source cryptography library
 Group:		System/Libraries
 
 %description -n %{libname}
 Beecrypt is a general-purpose cryptography library.
 
-%package -n	%{devname}
+%package -n %{devname}
 Summary:	Files needed for developing applications with beecrypt
 Group:		Development/C
 %if %{with cplusplus}
@@ -83,37 +83,37 @@ Requires:	%{libname_java} = %{EVRD}
 Requires:	%{libname} = %{EVRD}
 Provides:	%{name}-devel = %{EVRD}
 
-%description -n	%{devname}
+%description -n %{devname}
 Beecrypt is a general-purpose cryptography library.  This package contains
 files needed for developing applications with beecrypt.
 
 %if %{with python}
-%package -n	python-%{name}
+%package -n python-%{name}
 Summary:	Files needed for python applications using beecrypt
 Group:		Development/C
 %rename		%{name}-python
 
-%description -n	python-%{name}
+%description -n python-%{name}
 Beecrypt is a general-purpose cryptography library.  This package contains
 files needed for using python with beecrypt.
 %endif
 
 %if %{with cplusplus}
-%package -n	%{libname_cxx}
+%package -n %{libname_cxx}
 Summary:	Files needed for C++ applications using beecrypt
 Group:		Development/C++
 
-%description -n	%{libname_cxx}
+%description -n %{libname_cxx}
 Beecrypt is a general-purpose cryptography library.  This package contains
 files needed for using C++ with beecrypt.
 %endif
 
 %if %{with java}
-%package -n	%{libname_java}
+%package -n %{libname_java}
 Summary:	Files needed for java applications using beecrypt
 Group:		Development/C
 
-%description -n	%{libname_java}
+%description -n %{libname_java}
 Beecrypt is a general-purpose cryptography library.  This package contains
 files needed for using java with beecrypt.
 %endif
@@ -125,9 +125,9 @@ files needed for using java with beecrypt.
 %build
 # text relocation error
 %ifarch aarch64
-%global optflags %optflags -fopenmp -fuse-ld=bfd
+%global optflags %optflags -Ofast -falign-functions=32 -fno-math-errno -fno-trapping-math -fopenmp -fuse-ld=bfd
 %else
-%global optflags %optflags -fopenmp
+%global optflags %optflags -Ofast -falign-functions=32 -fno-math-errno -fno-trapping-math -fopenmp
 %endif
 
 export OPENMP_LIBS="-lomp"
@@ -210,4 +210,3 @@ rm -f %{buildroot}%{py_platsitedir}/_bc.*a
 %files -n %{libname_java}
 %{_libdir}/libbeecrypt_java.so.%{major}*
 %endif
-
