@@ -1,7 +1,7 @@
 %bcond_without python
 %bcond_with cplusplus
 %bcond_with docs
-%ifnarch %{mips} %{armx}
+%ifnarch %{mips} %{armx} %{riscv}
 %bcond_without java
 %else
 %bcond_with java
