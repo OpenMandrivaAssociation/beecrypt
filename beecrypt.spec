@@ -120,7 +120,7 @@ files needed for using java with beecrypt.
 
 %prep
 %setup -q
-%apply_patches
+%autopatch -p1
 
 %build
 # text relocation error
