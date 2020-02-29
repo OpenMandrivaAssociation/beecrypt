@@ -2,7 +2,7 @@
 %bcond_with cplusplus
 %bcond_with docs
 %ifnarch %{mips} %{armx} %{riscv}
-%bcond_without java
+%bcond_with java
 %else
 %bcond_with java
 %endif
