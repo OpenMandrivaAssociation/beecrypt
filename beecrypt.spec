@@ -39,6 +39,7 @@ Patch1:		beecrypt-4.2.0-lib64.patch
 Patch3:		beecrypt-4.2.1-py_platsitedir.diff
 Patch4:		beecrypt-4.2.1-gcc4.7.patch
 Patch5:		beecrypt_arm_configure_fix.patch
+Patch6:		beecrypt-4.2.1-icu-61.patch
 
 %if %{with docs}
 # MD this is really ridiculous
