@@ -8,7 +8,6 @@
 %endif
 
 %define major 7
-%define debug_package %nil
 %define libname %mklibname %{name} %{major}
 %define libname_cxx %mklibname %{name}_cxx %{major}
 %define libname_java %mklibname %{name}_java %{major}
@@ -19,7 +18,7 @@
 Summary:	An open source cryptography library
 Name:		beecrypt
 Version:	4.2.1
-Release:	38
+Release:	39
 Group:		System/Libraries
 License:	LGPLv2+
 Url:		http://beecrypt.sourceforge.net/
@@ -121,15 +120,14 @@ files needed for using java with beecrypt.
 %endif
 
 %prep
-%setup -q
-%autopatch -p1
+%autosetup -p1
 
 %build
 # text relocation error
 %ifarch aarch64
-%global optflags %optflags -Ofast -falign-functions=32 -fno-math-errno -fno-trapping-math -fopenmp -fuse-ld=bfd
+%global optflags %{optflags} -O3 -falign-functions=32 -fno-math-errno -fno-trapping-math -fopenmp -fuse-ld=bfd
 %else
-%global optflags %optflags -Ofast -falign-functions=32 -fno-math-errno -fno-trapping-math -fopenmp
+%global optflags %{optflags} -O3 -falign-functions=32 -fno-math-errno -fno-trapping-math -fopenmp
 %endif
 
 export OPENMP_LIBS="-lomp"
@@ -151,7 +149,7 @@ export ac_cv_java_include="-I%{_jvmdir}/java/include -I%{_jvmdir}/java/include/l
 	--with-java
 %endif
 
-%make
+%make_build
 
 %if %{with docs}
 pushd include/beecrypt
@@ -168,22 +166,19 @@ cat /proc/cpuinfo
 make bench || :
 
 %install
-%makeinstall_std
-mkdir %{buildroot}/%{_lib}
-mv %{buildroot}%{_libdir}/libbeecrypt.so.%{major}* %{buildroot}/%{_lib}
-ln -srf %{buildroot}/%{_lib}/libbeecrypt.so.%{major}.*.* %{buildroot}%{_libdir}/libbeecrypt.so
+%make_install
 
 # XXX nuke unpackaged files, artifacts from using libtool to produce module
 rm -f %{buildroot}%{py_platsitedir}/_bc.*a
 
 %files -n %{libname}
-%doc README BENCHMARKS
-/%{_lib}/libbeecrypt.so.%{major}*
+%{_libdir}/libbeecrypt.so.%{major}*
 
 %files -n %{devname}
 %if %{with docs}
 %doc BUGS docs/html docs/latex
 %endif
+%doc README BENCHMARKS
 %{_includedir}/%{name}
 %if %{with cplusplus}
 %{_libdir}/%{name}/base.so
