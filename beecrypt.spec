@@ -21,7 +21,7 @@ Version:	4.2.1
 Release:	40
 Group:		System/Libraries
 License:	LGPLv2+
-Url:		http://beecrypt.sourceforge.net/
+Url:		https://beecrypt.sourceforge.net/
 Source0:	http://prdownloads.sourceforge.net/beecrypt/%{name}-%{version}.tar.gz
 Patch0:		beecrypt-4.1.2-biarch.patch
 # AdamW: ugly patch simply defines upstream's odd libaltdir variable to be 
