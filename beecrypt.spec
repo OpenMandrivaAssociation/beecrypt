@@ -44,6 +44,11 @@ Patch7:		beecrypt-4.2.1-cast-uchar.patch
 %if %{with docs}
 # MD this is really ridiculous
 # try bootstrapping a core package with theses BRs
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	doxygen
 BuildRequires:	graphviz
 BuildRequires:	m4
